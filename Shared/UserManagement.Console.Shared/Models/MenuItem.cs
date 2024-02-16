@@ -8,12 +8,12 @@
   /// </remarks>
   public class MenuItem
   {
-    /// <summary>
-    /// Gets or sets the Menu Item Id.
-    /// </summary>
-    /// <remarks>
-    /// You need to generate the menu item id.
-    /// </remarks>
+    public MenuItem(int menuItemId, string menuItemDescription)
+    {
+      MenuItemId = menuItemId;
+      MenuItemDescription = menuItemDescription;
+    }
+
     public int MenuItemId { get; set; }
 
     public string MenuItemDescription { get; set; } = string.Empty;

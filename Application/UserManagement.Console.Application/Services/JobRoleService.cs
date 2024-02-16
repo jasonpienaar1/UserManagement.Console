@@ -8,5 +8,8 @@
   /// </remarks>
   public class JobRoleService
   {
+    public JobRoleService()
+    {
+    }
   }
 }
