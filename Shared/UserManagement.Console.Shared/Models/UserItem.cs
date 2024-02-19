@@ -16,9 +16,8 @@ namespace UserManagement.Console.Shared.Models
       JobRoleId = jobRoleId;
     }
 
-    public UserItem(int userId, int jobRoleId, string jobRoleName) : base(jobRoleId, jobRoleName)
+    public UserItem(int userId)
     {
-      JobRoleId = jobRoleId;
       UserId = userId;
     }
 
@@ -130,13 +129,20 @@ namespace UserManagement.Console.Shared.Models
       {
         string? readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
-        int phoneNumber = int.Parse(readResult);
-        validEntry = readResult == "" ? false : true;
-        if (readResult.Length == 10)
+        try
         {
-          validEntry = true;
-          response = $"{phoneNumber} is a valid phone number";
-          PhoneNumber = phoneNumber;
+          int phoneNumber = int.Parse(readResult);
+          validEntry = readResult == "" ? false : true;
+          if (readResult.Length == 10)
+          {
+            validEntry = true;
+            response = $"{phoneNumber} is a valid phone number";
+            PhoneNumber = phoneNumber;
+          }
+        }
+        catch (Exception e)
+        {
+          System.Console.Error.WriteLine(e);
         }
 
         if (response == "Invalid phone number.")
@@ -146,6 +152,22 @@ namespace UserManagement.Console.Shared.Models
       }
 
       return PhoneNumber;
+    }
+    public string AssignJobRole()
+    {
+      bool validEntry = false;
+      string response = "Valid name enetered.";
+      while (!validEntry)
+      {
+        string? readResult = System.Console.ReadLine();
+        readResult = readResult.Trim();
+        validEntry = readResult == "" ? false : true;
+        response = validEntry ? $"{readResult} is a valid name" : response = "Enter a valid name.";
+        LastName = readResult;
+        System.Console.WriteLine(response);
+      }
+
+      return LastName;
     }
   }
 }

@@ -22,7 +22,7 @@ do
     {
       case "1":
         int userId = UserItemService.GetUserID();
-        UserItem userItem = new UserItem(userId, 1, "Manager");
+        UserItem userItem = new UserItem(userId);
         Console.WriteLine("\n\rEnter the first name of the user");
         userItem.AddFirstName();
         Console.WriteLine("\n\rEnter the last name of the user");
@@ -33,15 +33,31 @@ do
         userItem.AddEmailAddress();
         Console.WriteLine("\n\rEnter the phone number of the user");
         userItem.AddPhoneNumber();
+        Console.WriteLine("\n\rSelect job role for new user based on ID displayed below.");
+        IEnumerable<JobRole> jobRoles = JobRoleService.RetrieveAllJobRoles();
+        foreach (JobRole job in jobRoles)
+        {
+          Console.WriteLine($"Job Role ID: \t\t{job.JobRoleId} \t\tJob Role Name: \t\t{job.JobRoleName}");
+        }
+        userItem.AssignJobRole();
+        JobRoleService.ReturnJobRole();
         UserItemService.AddUser(userItem);
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadLine();
         break;
       case "2":
         int jobRoleId = JobRoleService.GetJobRoleID();
         JobRole jobRole = new JobRole();
+        Console.WriteLine("Add a job role.");
+        jobRole.AddJobRole(jobRoleId);
         JobRoleService.AddJobRole(jobRole);
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadLine();
         break;
       case "3":
         UserItemService.RetrieveAllUsers();
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadLine();
         break;
       case "4":
         break;

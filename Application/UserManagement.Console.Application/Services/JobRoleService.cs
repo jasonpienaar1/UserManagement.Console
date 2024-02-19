@@ -16,6 +16,7 @@ namespace UserManagement.Console.Application.Services
     {
       JobRoles.Add(jobRole);
     }
+
     public static int GetJobRoleID()
     {
       JobRole? lastJobRole = JobRoles.LastOrDefault();
@@ -28,5 +29,12 @@ namespace UserManagement.Console.Application.Services
         return 0;
       }
     }
+
+    public static IEnumerable<JobRole> RetrieveAllJobRoles()
+    {
+      return JobRoles;
+    }
+
+    public static IEnumerable<JobRole> ReturnJobRole() { return JobRoles; }
   }
 }
