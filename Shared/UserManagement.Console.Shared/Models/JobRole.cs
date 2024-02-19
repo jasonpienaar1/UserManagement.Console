@@ -7,6 +7,10 @@
       JobRoleId = jobRoleId;
       JobRoleName = jobRoleName;
     }
+    public JobRole()
+    {
+
+    }
 
     public int JobRoleId { get; set; }
 

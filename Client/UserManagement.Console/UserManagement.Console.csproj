@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Application\UserManagement.Console.Application\UserManagement.Console.Application.csproj" />
+    <ProjectReference Include="..\..\Shared\UserManagement.Console.Shared\UserManagement.Console.Shared.csproj" />
   </ItemGroup>
 
 </Project>
