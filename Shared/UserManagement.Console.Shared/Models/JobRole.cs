@@ -1,6 +1,6 @@
 ﻿namespace UserManagement.Console.Shared.Models
 {
-  internal class JobRole
+  public class JobRole
   {
     public JobRole(int jobRoleId, string jobRoleName)
     {

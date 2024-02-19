@@ -1,22 +1,40 @@
-﻿namespace UserManagement.Console
+﻿public class AddUser
 {
-  internal class AddUser
+  public string AddFirstName()
   {
-    public string AddFirstName(string firstName)
+    bool validEntry = false;
+    string response = "Valid name enetered.";
+    string firstName;
+    while (!validEntry)
     {
-      bool validEntry = false;
-      // get species (cat or dog) - string animalSpecies is a required field 
-      do
-      {
-        firstName = firstName.Trim();
-        if (firstName != null)
-        {
-          firstName = firstName.ToLower();
-          validEntry = firstName == "" ? false : true;
-        }
-      } while (validEntry == false);
-
-      return "Name captured";
+      string? readResult = Console.ReadLine();
+      readResult = readResult.Trim();
+      readResult = readResult.ToLower();
+      validEntry = readResult == "" ? false : true;
+      response = validEntry == true ? $"{readResult} is a valid name" : response = "Enter a valid name.";
+      firstName = readResult;
+      Console.WriteLine(response);
     }
+
+    return response;
+  }
+
+  public string AddLastName()
+  {
+    bool validEntry = false;
+    string response = "Valid name enetered.";
+    string? lastName;
+    while (!validEntry)
+    {
+      string? readResult = Console.ReadLine();
+      readResult = readResult.Trim();
+      readResult = readResult.ToLower();
+      validEntry = readResult == "" ? false : true;
+      response = validEntry ? $"{readResult} is a valid name" : response = "Enter a valid name.";
+      lastName = readResult;
+      Console.WriteLine(response);
+    }
+
+    return response;
   }
 }

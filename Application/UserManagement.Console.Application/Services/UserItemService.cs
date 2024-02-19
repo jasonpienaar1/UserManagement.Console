@@ -1,6 +1,17 @@
-﻿namespace UserManagement.Console.Application.Services
+﻿using UserManagement.Console.Shared.Models;
+
+namespace UserManagement.Console.Application.Services
 {
-  internal class UserItemService
+  public class UserItemService
   {
+    public List<UserItem> newUsers;
+
+    public UserItemService()
+    {
+      newUsers = new List<UserItem>();
+      {
+
+      }
+    }
   }
 }

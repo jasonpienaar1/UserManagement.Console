@@ -1,6 +1,6 @@
 ﻿namespace UserManagement.Console.Shared.Models
 {
-  internal class UserItem : JobRole
+  public class UserItem : JobRole
   {
     public UserItem(int userId, string firstName, string lastName, string dateOfBrith, string emailAddress, int phoneNumber, int jobRoleId, string jobRoleName)
       : base(jobRoleId, jobRoleName)

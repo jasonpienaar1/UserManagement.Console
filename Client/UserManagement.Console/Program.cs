@@ -1,5 +1,4 @@
-﻿using UserManagement.Console;
-using UserManagement.Console.Application.Services;
+﻿using UserManagement.Console.Application.Services;
 using UserManagement.Console.Shared.Models;
 string menuSelection = " ";
 string? readResult;
@@ -23,9 +22,12 @@ do
     {
       case "1":
         Console.WriteLine("\n\rEnter the first name of the user");
-        readResult = Console.ReadLine();
-        addUser.AddFirstName(readResult);
-        Console.WriteLine();
+        addUser.AddFirstName();
+        Console.WriteLine("\n\rEnter the last name of the user");
+        addUser.AddLastName();
+        Console.WriteLine("\n\rEnter the date of birth of the user (dd/mm/yy)");
+        Console.WriteLine("\n\rEnter the email address of the user");
+        Console.WriteLine("\n\rEnter the phone number of the user");
         break;
       case "2":
         break;
