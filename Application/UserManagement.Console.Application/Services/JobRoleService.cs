@@ -35,6 +35,5 @@ namespace UserManagement.Console.Application.Services
       return JobRoles;
     }
 
-    public static IEnumerable<JobRole> ReturnJobRole() { return JobRoles; }
   }
 }

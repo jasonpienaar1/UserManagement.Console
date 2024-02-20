@@ -162,8 +162,9 @@ namespace UserManagement.Console.Shared.Models
         string? readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
         validEntry = readResult == "" ? false : true;
+        int jobId = int.Parse(readResult);
         response = validEntry ? $"{readResult} is a valid name" : response = "Enter a valid name.";
-        LastName = readResult;
+        JobRoleId = jobId;
         System.Console.WriteLine(response);
       }
 

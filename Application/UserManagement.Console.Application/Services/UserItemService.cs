@@ -8,6 +8,8 @@ namespace UserManagement.Console.Application.Services
 
     public static void AddUser(UserItem userItem)
     {
+      IEnumerable<string> query = from job in JobRoleService.JobRoles where userItem.JobRoleId == job.JobRoleId select job.JobRoleName;
+      userItem.JobRoleName = query.FirstOrDefault();
       Users.Add(userItem);
     }
 

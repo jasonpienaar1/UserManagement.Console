@@ -40,7 +40,6 @@ do
           Console.WriteLine($"Job Role ID: \t\t{job.JobRoleId} \t\tJob Role Name: \t\t{job.JobRoleName}");
         }
         userItem.AssignJobRole();
-        JobRoleService.ReturnJobRole();
         UserItemService.AddUser(userItem);
         Console.WriteLine("Press any key to continue...");
         Console.ReadLine();
