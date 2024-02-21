@@ -22,6 +22,11 @@ namespace UserManagement.Console.Application.Services
 
     public List<MenuItem> GetMenuItems()
     {
+      foreach (MenuItem menuItem in menuItems)
+      {
+        System.Console.WriteLine($"{menuItem.MenuItemId} {menuItem.MenuItemDescription}");
+      }
+
       return menuItems;
     }
   }

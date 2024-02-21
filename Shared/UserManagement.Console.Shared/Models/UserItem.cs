@@ -4,82 +4,86 @@ namespace UserManagement.Console.Shared.Models
 {
   public class UserItem : JobRole
   {
-    public UserItem(int userId, string firstName, string lastName, string dateOfBrith, string emailAddress, int phoneNumber, int jobRoleId, string jobRoleName)
-      : base(jobRoleId, jobRoleName)
+    public UserItem(int userId, string firstName, string lastName, string dateOfBrith, string emailAddress, int phoneNumber, int? jobRoleId = null, string? jobRoleName = "")
+
     {
-      UserId = userId;
-      FirstName = firstName;
-      LastName = lastName;
-      DateOfBrith = dateOfBrith;
-      EmailAddress = emailAddress;
-      PhoneNumber = phoneNumber;
-      JobRoleId = jobRoleId;
+      this.UserId = userId;
+      this.FirstName = firstName;
+      this.LastName = lastName;
+      this.DateOfBrith = dateOfBrith;
+      this.EmailAddress = emailAddress;
+      this.PhoneNumber = phoneNumber;
+      this.JobRoleId = jobRoleId;
+      this.JobRoleName = jobRoleName;
     }
 
     public UserItem(int userId)
     {
-      UserId = userId;
+      this.UserId = userId;
     }
 
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
 
-    public string FirstName { get; set; }
+    public string? FirstName { get; set; }
 
-    public string LastName { get; set; }
+    public string? LastName { get; set; }
 
-    public string DateOfBrith { get; set; }
+    public string? DateOfBrith { get; set; }
 
-    public string EmailAddress { get; set; }
+    public string? EmailAddress { get; set; }
 
-    public int PhoneNumber { get; set; }
+    public int? PhoneNumber { get; set; }
 
     public string AddFirstName()
     {
-      bool validEntry = false;
-      string response = "Valid name enetered.";
-      while (!validEntry)
+      var validEntry = true;
+      var readResult = " ";
+      do
       {
-        string? readResult = System.Console.ReadLine();
+        readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
-        validEntry = readResult == "" ? false : true;
-        response = validEntry == true ? $"{readResult} is a valid name" : response = "Enter a valid name.";
-        FirstName = readResult;
+        validEntry = string.IsNullOrEmpty(readResult);
+
+        var response = !validEntry ? $"{readResult} is a valid first name" : $"{readResult} is not a valid first name. Enter a valid first name.";
         System.Console.WriteLine(response);
       }
+      while (validEntry);
+      this.FirstName = readResult;
 
-      return FirstName;
+      return this.FirstName;
     }
 
     public string AddLastName()
     {
-      bool validEntry = false;
-      string response = "Valid name enetered.";
+      var validEntry = true;
+      var readResult = " ";
       while (!validEntry)
       {
-        string? readResult = System.Console.ReadLine();
+        readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
-        validEntry = readResult == "" ? false : true;
-        response = validEntry ? $"{readResult} is a valid name" : response = "Enter a valid name.";
-        LastName = readResult;
+        validEntry = string.IsNullOrEmpty(readResult);
+
+        var response = validEntry ? $"{readResult} is a valid last name" : $"{readResult} is not a valid last name. Enter a valid last name.";
         System.Console.WriteLine(response);
       }
 
-      return LastName;
+      this.LastName = readResult;
+      return this.LastName;
     }
 
     public string AddDateOfBirth()
     {
-      DateTime date = DateTime.Now;
-      bool validEntry = false;
-      string response = "Invalid date enetered.";
+      var date = DateTime.Now;
+      var validEntry = false;
+      var response = "Invalid date enetered.";
       while (!validEntry)
       {
-        string? readResult = System.Console.ReadLine();
+        var readResult = System.Console.ReadLine();
         validEntry = readResult == "" ? false : true;
         if (DateTime.TryParse(readResult, out date))
         {
-          string datePartOnly = date.ToShortDateString();
-          DateOfBrith = datePartOnly;
+          var datePartOnly = date.ToShortDateString();
+          this.DateOfBrith = datePartOnly;
           response = "Valid date entered";
         }
 
@@ -90,16 +94,17 @@ namespace UserManagement.Console.Shared.Models
         }
       }
 
-      return DateOfBrith;
+      return this.DateOfBrith;
     }
+
     public string AddEmailAddress()
     {
-      bool validEntry = false;
-      string response = "Invalid email address";
-      string pattern = @"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b";
+      var validEntry = false;
+      var response = "Invalid email address";
+      var pattern = @"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b";
       while (!validEntry)
       {
-        string? readResult = System.Console.ReadLine();
+        var readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
         validEntry = readResult == "" ? false : true;
 
@@ -107,7 +112,7 @@ namespace UserManagement.Console.Shared.Models
         {
           validEntry = true;
           response = $"{readResult} is a valid email address";
-          EmailAddress = readResult;
+          this.EmailAddress = readResult;
         }
 
         if (response == "Invalid email address")
@@ -118,26 +123,26 @@ namespace UserManagement.Console.Shared.Models
         System.Console.WriteLine(response);
       }
 
-      return EmailAddress;
+      return this.EmailAddress;
     }
 
     public int AddPhoneNumber()
     {
-      bool validEntry = false;
-      string response = "Invalid phone number.";
+      var validEntry = false;
+      var response = "Invalid phone number.";
       while (!validEntry)
       {
-        string? readResult = System.Console.ReadLine();
+        var readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
         try
         {
-          int phoneNumber = int.Parse(readResult);
+          var phoneNumber = int.Parse(readResult);
           validEntry = readResult == "" ? false : true;
           if (readResult.Length == 10)
           {
             validEntry = true;
             response = $"{phoneNumber} is a valid phone number";
-            PhoneNumber = phoneNumber;
+            this.PhoneNumber = phoneNumber;
           }
         }
         catch (Exception e)
@@ -151,24 +156,25 @@ namespace UserManagement.Console.Shared.Models
         }
       }
 
-      return PhoneNumber;
+      return (int)this.PhoneNumber;
     }
+
     public string AssignJobRole()
     {
-      bool validEntry = false;
-      string response = "Valid name enetered.";
+      var validEntry = false;
+      var response = "Valid name enetered.";
       while (!validEntry)
       {
-        string? readResult = System.Console.ReadLine();
+        var readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
         validEntry = readResult == "" ? false : true;
-        int jobId = int.Parse(readResult);
+        var jobId = int.Parse(readResult);
         response = validEntry ? $"{readResult} is a valid name" : response = "Enter a valid name.";
-        JobRoleId = jobId;
+        this.JobRoleId = jobId;
         System.Console.WriteLine(response);
       }
 
-      return LastName;
+      return this.JobRoleName;
     }
   }
 }

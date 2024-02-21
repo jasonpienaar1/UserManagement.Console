@@ -1,17 +1,12 @@
 ﻿using UserManagement.Console.Application.Services;
 using UserManagement.Console.Shared.Models;
-string menuSelection = " ";
+var menuSelection = " ";
 string? readResult;
-
 do
 {
   Console.WriteLine("Welcome to your User Management System! \nPlease select an option from the menu below: \n");
-  MenuItemService menuItemService = new MenuItemService();
-  List<MenuItem> menutItems = menuItemService.GetMenuItems();
-  foreach (MenuItem menuItem in menutItems)
-  {
-    Console.WriteLine($"{menuItem.MenuItemId} {menuItem.MenuItemDescription}");
-  }
+  var menuItemService = new MenuItemService();
+  menuItemService.GetMenuItems();
 
   readResult = Console.ReadLine();
   if (readResult != null)
@@ -21,8 +16,8 @@ do
     switch (menuSelection)
     {
       case "1":
-        int userId = UserItemService.GetUserID();
-        UserItem userItem = new UserItem(userId);
+        var userId = UserItemService.GetUserID();
+        var userItem = new UserItem(userId);
         Console.WriteLine("\n\rEnter the first name of the user");
         userItem.AddFirstName();
         Console.WriteLine("\n\rEnter the last name of the user");
@@ -34,8 +29,8 @@ do
         Console.WriteLine("\n\rEnter the phone number of the user");
         userItem.AddPhoneNumber();
         Console.WriteLine("\n\rSelect job role for new user based on ID displayed below.");
-        IEnumerable<JobRole> jobRoles = JobRoleService.RetrieveAllJobRoles();
-        foreach (JobRole job in jobRoles)
+        var jobRoles = JobRoleService.RetrieveAllJobRoles();
+        foreach (var job in jobRoles)
         {
           Console.WriteLine($"Job Role ID: \t\t{job.JobRoleId} \t\tJob Role Name: \t\t{job.JobRoleName}");
         }
@@ -45,8 +40,8 @@ do
         Console.ReadLine();
         break;
       case "2":
-        int jobRoleId = JobRoleService.GetJobRoleID();
-        JobRole jobRole = new JobRole();
+        var jobRoleId = JobRoleService.GetJobRoleID();
+        var jobRole = new JobRole();
         Console.WriteLine("Add a job role.");
         jobRole.AddJobRole(jobRoleId);
         JobRoleService.AddJobRole(jobRole);
@@ -59,12 +54,22 @@ do
         Console.ReadLine();
         break;
       case "4":
+        UserItemService.SearchForUser();
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadLine();
         break;
       case "5":
+        UserItemService.UpdateUser();
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadLine();
         break;
       case "6":
+        UserItemService.DeleteUser();
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadLine();
         break;
       default:
+        Console.WriteLine("Incorrect menu option selected");
         break;
     }
   }
