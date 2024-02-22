@@ -34,8 +34,13 @@ namespace UserManagement.Console.Application.Services
       }
     }
 
-    public static IEnumerable<JobRole> RetrieveAllJobRoles()
+    public static List<JobRole> RetrieveAllJobRoles()
     {
+      foreach (var job in JobRoles)
+      {
+        System.Console.WriteLine($"Job Role ID: \t\t{job.JobRoleId} \t\tJob Role Name: \t\t{job.JobRoleName}");
+      }
+
       return JobRoles;
     }
 

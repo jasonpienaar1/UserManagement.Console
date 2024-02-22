@@ -5,8 +5,7 @@ string? readResult;
 do
 {
   Console.WriteLine("Welcome to your User Management System! \nPlease select an option from the menu below: \n");
-  var menuItemService = new MenuItemService();
-  menuItemService.GetMenuItems();
+  MenuItemService.GetMenuItems();
 
   readResult = Console.ReadLine();
   if (readResult != null)
@@ -29,11 +28,7 @@ do
         Console.WriteLine("\n\rEnter the phone number of the user");
         userItem.AddPhoneNumber();
         Console.WriteLine("\n\rSelect job role for new user based on ID displayed below.");
-        var jobRoles = JobRoleService.RetrieveAllJobRoles();
-        foreach (var job in jobRoles)
-        {
-          Console.WriteLine($"Job Role ID: \t\t{job.JobRoleId} \t\tJob Role Name: \t\t{job.JobRoleName}");
-        }
+        JobRoleService.RetrieveAllJobRoles();
         userItem.AssignJobRole();
         UserItemService.AddUser(userItem);
         Console.WriteLine("Press any key to continue...");

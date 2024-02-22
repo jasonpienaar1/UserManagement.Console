@@ -42,8 +42,9 @@ namespace UserManagement.Console.Application.Services
     public static void SearchForUser()
     {
       var readResult = System.Console.ReadLine();
-      var query = from user in Users where user.FirstName.Contains(readResult, StringComparison.OrdinalIgnoreCase) | user.EmailAddress.Contains(readResult, StringComparison.OrdinalIgnoreCase) select user;
-      foreach (var users in query)
+
+      var searchForUser = Users.Where(user => user.FirstName.Match(readResult) | user.EmailAddress.Match(readResult));
+      foreach (var users in searchForUser)
       {
         System.Console.WriteLine($"UserID: \t\t{users.UserId} \nFirst name: \t\t{users.FirstName} \nLast name: \t\t{users.LastName} \nDate of Birth: \t\t{users.DateOfBrith} \nEmail address: \t\t{users.EmailAddress} \nPhone number: \t\t{users.PhoneNumber} \nJob role: \t\t{users.JobRoleName} \n");
       }
@@ -55,30 +56,42 @@ namespace UserManagement.Console.Application.Services
       System.Console.WriteLine("Select which user you would like to update based on UserId");
       int readResult;
       readResult = Convert.ToInt32(System.Console.ReadLine());
-      var query = from user in Users where user.UserId == readResult select user;
-      var obj = query.FirstOrDefault();
-      if (obj != null)
+      var query = Users.FirstOrDefault(user => user.UserId == readResult);
+      MenuItemService.GetUpdateMenuItems();
+      readResult = Convert.ToInt32(System.Console.ReadLine());
+      switch (readResult)
       {
-        System.Console.WriteLine($"The current first name is {obj.FirstName}. Please edit the first name.");
-        var newFirstName = System.Console.ReadLine();
-        obj.FirstName = newFirstName;
-
-        System.Console.WriteLine($"The current last name is {obj.LastName}. Please edit the last name.");
-        var newLastName = System.Console.ReadLine();
-        obj.LastName = newLastName;
-
-        System.Console.WriteLine($"The current date of birth is {obj.DateOfBrith}. Please edit the date of birth (mm/dd/yyyy).");
-        var newDateOfBirth = System.Console.ReadLine();
-        obj.DateOfBrith = newDateOfBirth;
-
-        System.Console.WriteLine($"The current email address is {obj.EmailAddress}. Please edit the email address.");
-        var newEmailAddress = System.Console.ReadLine();
-        obj.EmailAddress = newEmailAddress;
-
-        System.Console.WriteLine($"The current phone number is {obj.PhoneNumber}. Please edit the phone number.");
-        int newPhoneNumber;
-        newPhoneNumber = Convert.ToInt32(System.Console.ReadLine());
-        obj.PhoneNumber = newPhoneNumber;
+        case 1:
+          System.Console.WriteLine($"The current first name is {query.FirstName}. Please edit the first name.");
+          query.AddFirstName();
+          break;
+        case 2:
+          System.Console.WriteLine($"The current last name is {query.LastName}. Please edit the last name.");
+          query.AddLastName();
+          break;
+        case 3:
+          System.Console.WriteLine($"The current date of birth is {query.DateOfBrith}. Please edit the date of birth (mm/dd/yyyy).");
+          query.AddDateOfBirth();
+          break;
+        case 4:
+          System.Console.WriteLine($"The current email address is {query.EmailAddress}. Please edit the email address.");
+          query.AddEmailAddress();
+          break;
+        case 5:
+          System.Console.WriteLine($"The current phone number is {query.PhoneNumber}. Please edit the phone number.");
+          query.AddPhoneNumber();
+          break;
+        case 6:
+          JobRoleService.RetrieveAllJobRoles();
+          System.Console.WriteLine($"The current job role is {query.JobRoleName}. Please edit the job role.");
+          var newJobRoleId = query.AssignJobRole();
+          var assignJobRoleName = JobRoleService.JobRoles.FirstOrDefault(user => user.JobRoleId == newJobRoleId.Value).JobRoleName;
+          query.JobRoleName = assignJobRoleName;
+          System.Console.WriteLine("");
+          break;
+        default:
+          System.Console.WriteLine("Incorrect Menu option. Returning to main menu.");
+          break;
       }
     }
 
@@ -88,11 +101,9 @@ namespace UserManagement.Console.Application.Services
       System.Console.WriteLine("Select a user to delete based on their ID");
       int userResponse;
       userResponse = Convert.ToInt32(System.Console.ReadLine());
-      var query = from user in Users where user.UserId == userResponse select user;
-      var numberOfUsers = query.Count();
-      if (userResponse <= numberOfUsers)
+      var userToRemove = Users.FirstOrDefault(user => user.UserId == userResponse);
+      if (userToRemove != null)
       {
-        var userToRemove = query.FirstOrDefault();
         System.Console.WriteLine($"You are about to delete {userToRemove.FirstName} {userToRemove.LastName}");
         System.Console.WriteLine("Are you sure you want to remove this user? Yes? No?");
         var userDeleteResponse = System.Console.ReadLine();

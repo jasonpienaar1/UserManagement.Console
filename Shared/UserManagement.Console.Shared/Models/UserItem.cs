@@ -57,7 +57,7 @@ namespace UserManagement.Console.Shared.Models
     {
       var validEntry = true;
       var readResult = " ";
-      while (!validEntry)
+      do
       {
         readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
@@ -66,6 +66,7 @@ namespace UserManagement.Console.Shared.Models
         var response = validEntry ? $"{readResult} is a valid last name" : $"{readResult} is not a valid last name. Enter a valid last name.";
         System.Console.WriteLine(response);
       }
+      while (validEntry);
 
       this.LastName = readResult;
       return this.LastName;
@@ -159,22 +160,30 @@ namespace UserManagement.Console.Shared.Models
       return (int)this.PhoneNumber;
     }
 
-    public string AssignJobRole()
+    public int? AssignJobRole()
     {
-      var validEntry = false;
-      var response = "Valid name enetered.";
-      while (!validEntry)
+      var validEntry = true;
+      var readResult = " ";
+      do
       {
-        var readResult = System.Console.ReadLine();
+        readResult = System.Console.ReadLine();
+        validEntry = !string.IsNullOrWhiteSpace(readResult);
         readResult = readResult.Trim();
-        validEntry = readResult == "" ? false : true;
-        var jobId = int.Parse(readResult);
-        response = validEntry ? $"{readResult} is a valid name" : response = "Enter a valid name.";
-        this.JobRoleId = jobId;
+
+        if (!int.TryParse(readResult, out var option))
+        {
+          validEntry = false;
+        }
+        else
+        {
+          this.JobRoleId = option;
+        }
+
+        var response = validEntry ? $"{readResult} is a valid Job role." : "Job role not valid. Enter a valid Job role.";
         System.Console.WriteLine(response);
       }
-
-      return this.JobRoleName;
+      while (!validEntry);
+      return this.JobRoleId;
     }
   }
 }
