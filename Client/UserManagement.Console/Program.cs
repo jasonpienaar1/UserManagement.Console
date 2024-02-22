@@ -18,7 +18,8 @@ do
         var userId = UserItemService.GetUserID();
         var userItem = new UserItem(userId);
         Console.WriteLine("\n\rEnter the first name of the user");
-        userItem.AddFirstName();
+        var addUser = userItem.AddFirstName();
+        Console.WriteLine(addUser);
         Console.WriteLine("\n\rEnter the last name of the user");
         userItem.AddLastName();
         Console.WriteLine("\n\rEnter the date of birth of the user (mm/dd/yyyy)");
@@ -29,7 +30,8 @@ do
         userItem.AddPhoneNumber();
         Console.WriteLine("\n\rSelect job role for new user based on ID displayed below.");
         JobRoleService.RetrieveAllJobRoles();
-        userItem.AssignJobRole();
+        var numOfJobRoles = JobRoleService.JobRoles.Count;
+        userItem.AssignJobRole(numOfJobRoles);
         UserItemService.AddUser(userItem);
         Console.WriteLine("Press any key to continue...");
         Console.ReadLine();
@@ -49,11 +51,13 @@ do
         Console.ReadLine();
         break;
       case "4":
+        Console.WriteLine("\nPlease enter a users name or email address to search the user list. \n");
         UserItemService.SearchForUser();
         Console.WriteLine("Press any key to continue...");
         Console.ReadLine();
         break;
       case "5":
+        Console.WriteLine("\nBelow is a list of users. \n");
         UserItemService.UpdateUser();
         Console.WriteLine("Press any key to continue...");
         Console.ReadLine();

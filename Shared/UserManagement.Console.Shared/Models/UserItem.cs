@@ -38,16 +38,17 @@ namespace UserManagement.Console.Shared.Models
     {
       var validEntry = true;
       var readResult = " ";
+      var response = "";
       do
       {
         readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
-        validEntry = string.IsNullOrEmpty(readResult);
+        validEntry = !string.IsNullOrEmpty(readResult);
 
-        var response = !validEntry ? $"{readResult} is a valid first name" : $"{readResult} is not a valid first name. Enter a valid first name.";
+        response = validEntry ? $"{readResult} is a valid first name" : $"{readResult} is not a valid first name. Enter a valid first name.";
         System.Console.WriteLine(response);
       }
-      while (validEntry);
+      while (!validEntry);
       this.FirstName = readResult;
 
       return this.FirstName;
@@ -61,12 +62,12 @@ namespace UserManagement.Console.Shared.Models
       {
         readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
-        validEntry = string.IsNullOrEmpty(readResult);
+        validEntry = !string.IsNullOrEmpty(readResult);
 
         var response = validEntry ? $"{readResult} is a valid last name" : $"{readResult} is not a valid last name. Enter a valid last name.";
         System.Console.WriteLine(response);
       }
-      while (validEntry);
+      while (!validEntry);
 
       this.LastName = readResult;
       return this.LastName;
@@ -75,12 +76,12 @@ namespace UserManagement.Console.Shared.Models
     public string AddDateOfBirth()
     {
       var date = DateTime.Now;
-      var validEntry = false;
-      var response = "Invalid date enetered.";
-      while (!validEntry)
+      var validEntry = true;
+      var response = "Invalid date of birth enetered. Please enter a valid date of brith(mm/dd/yy)";
+      do
       {
         var readResult = System.Console.ReadLine();
-        validEntry = readResult == "" ? false : true;
+        validEntry = !string.IsNullOrEmpty(readResult);
         if (DateTime.TryParse(readResult, out date))
         {
           var datePartOnly = date.ToShortDateString();
@@ -93,7 +94,7 @@ namespace UserManagement.Console.Shared.Models
         {
           validEntry = false;
         }
-      }
+      } while (!validEntry);
 
       return this.DateOfBrith;
     }
@@ -129,38 +130,39 @@ namespace UserManagement.Console.Shared.Models
 
     public int AddPhoneNumber()
     {
-      var validEntry = false;
-      var response = "Invalid phone number.";
-      while (!validEntry)
+      var validEntry = true;
+      var response = " ";
+      do
       {
         var readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
         try
         {
+          validEntry = !string.IsNullOrWhiteSpace(readResult);
           var phoneNumber = int.Parse(readResult);
-          validEntry = readResult == "" ? false : true;
           if (readResult.Length == 10)
           {
             validEntry = true;
             response = $"{phoneNumber} is a valid phone number";
             this.PhoneNumber = phoneNumber;
           }
+          else
+          {
+            System.Console.WriteLine("Invalid phone number entered. Please enter a valid number of 10 digits.");
+            validEntry = false;
+          }
         }
         catch (Exception e)
         {
-          System.Console.Error.WriteLine(e);
-        }
-
-        if (response == "Invalid phone number.")
-        {
+          System.Console.WriteLine("Invalid phone number entered. Please enter a valid number of 10 digits.");
           validEntry = false;
         }
-      }
+      } while (!validEntry);
 
       return (int)this.PhoneNumber;
     }
 
-    public int? AssignJobRole()
+    public int? AssignJobRole(int numOfJobRoles)
     {
       var validEntry = true;
       var readResult = " ";
@@ -170,7 +172,7 @@ namespace UserManagement.Console.Shared.Models
         validEntry = !string.IsNullOrWhiteSpace(readResult);
         readResult = readResult.Trim();
 
-        if (!int.TryParse(readResult, out var option))
+        if (!int.TryParse(readResult, out var option) || option > numOfJobRoles - 1)
         {
           validEntry = false;
         }
