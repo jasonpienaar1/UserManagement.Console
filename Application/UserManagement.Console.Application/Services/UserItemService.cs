@@ -8,6 +8,7 @@ namespace UserManagement.Console.Application.Services
     {
       new UserItem(0, "Jeremy", "Doe", "01/01/2000", "doe.jeremy@easy.com", 0826372817, 0, "Manager"),
       new UserItem(1, "Jimmy", "Cool", "09/12/2001", "Jimmy@cool.com", 0826372876, 1, "Junior"),
+      new UserItem(2, "John", "Doe", "01/01/1998", "john@doe.com", 0827836126, 1, "Junior"),
     };
 
     public static void AddUser(UserItem userItem)
