@@ -17,21 +17,28 @@ do
       case "1":
         var userId = UserItemService.GetUserID();
         var userItem = new UserItem(userId);
+
         Console.WriteLine("\n\rEnter the first name of the user");
         var addUser = userItem.AddFirstName();
         Console.WriteLine(addUser);
+
         Console.WriteLine("\n\rEnter the last name of the user");
         userItem.AddLastName();
+
         Console.WriteLine("\n\rEnter the date of birth of the user (mm/dd/yyyy)");
         userItem.AddDateOfBirth();
+
         Console.WriteLine("\n\rEnter the email address of the user");
         userItem.AddEmailAddress();
+
         Console.WriteLine("\n\rEnter the phone number of the user");
         userItem.AddPhoneNumber();
+
         Console.WriteLine("\n\rSelect job role for new user based on ID displayed below.");
         JobRoleService.RetrieveAllJobRoles();
         var numOfJobRoles = JobRoleService.JobRoles.Count;
         userItem.AssignJobRole(numOfJobRoles);
+
         UserItemService.AddUser(userItem);
         Console.WriteLine("Press any key to continue...");
         Console.ReadLine();

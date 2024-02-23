@@ -77,7 +77,7 @@ namespace UserManagement.Console.Shared.Models
     {
       var date = DateTime.Now;
       var validEntry = true;
-      var response = "Invalid date of birth enetered. Please enter a valid date of brith(mm/dd/yy)";
+      var response = "Invalid date of birth enetered. Please enter a valid date of brith(mm/dd/yyyy)";
       do
       {
         var readResult = System.Console.ReadLine();
@@ -101,14 +101,14 @@ namespace UserManagement.Console.Shared.Models
 
     public string AddEmailAddress()
     {
-      var validEntry = false;
-      var response = "Invalid email address";
+      var validEntry = true;
+      var response = " ";
       var pattern = @"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b";
-      while (!validEntry)
+      do
       {
         var readResult = System.Console.ReadLine();
         readResult = readResult.Trim();
-        validEntry = readResult == "" ? false : true;
+        validEntry = !string.IsNullOrEmpty(readResult);
 
         if (Regex.Match(readResult, pattern).Success)
         {
@@ -116,14 +116,15 @@ namespace UserManagement.Console.Shared.Models
           response = $"{readResult} is a valid email address";
           this.EmailAddress = readResult;
         }
-
-        if (response == "Invalid email address")
+        else
         {
           validEntry = false;
+          response = "Invalid email address";
         }
 
         System.Console.WriteLine(response);
       }
+      while (!validEntry);
 
       return this.EmailAddress;
     }

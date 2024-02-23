@@ -70,11 +70,11 @@ namespace UserManagement.Console.Application.Services
       string userResponse;
       var validEntry = true;
       var numberOfUsers = Users.Count;
-      System.Console.WriteLine("Select which user you would like to update based on UserId");
+      System.Console.WriteLine("Select a user based on UserId");
       do
       {
         userResponse = System.Console.ReadLine();
-        if (int.TryParse(userResponse, out readResult) && readResult <= numberOfUsers - 1)
+        if (int.TryParse(userResponse, out readResult) && readResult <= numberOfUsers - 1 && readResult >= 0)
         {
           validEntry = true;
         }
@@ -97,37 +97,36 @@ namespace UserManagement.Console.Application.Services
       var query = Users.FirstOrDefault(user => user.UserId == readResult);
       do
       {
-        System.Console.WriteLine();
         MenuItemService.GetUpdateMenuItems();
-        readResult = Convert.ToInt32(System.Console.ReadLine());
-        switch (readResult)
+        var menuChoice = System.Console.ReadLine();
+        switch (menuChoice)
         {
-          case 1:
+          case "1":
             System.Console.WriteLine($"The current first name is {query.FirstName}. Please edit the first name.");
             query.AddFirstName();
             returnToMainMenu = UpdateCheck();
             break;
-          case 2:
+          case "2":
             System.Console.WriteLine($"The current last name is {query.LastName}. Please edit the last name.");
             query.AddLastName();
             returnToMainMenu = UpdateCheck();
             break;
-          case 3:
+          case "3":
             System.Console.WriteLine($"The current date of birth is {query.DateOfBrith}. Please edit the date of birth (mm/dd/yyyy).");
             query.AddDateOfBirth();
             returnToMainMenu = UpdateCheck();
             break;
-          case 4:
+          case "4":
             System.Console.WriteLine($"The current email address is {query.EmailAddress}. Please edit the email address.");
             query.AddEmailAddress();
             returnToMainMenu = UpdateCheck();
             break;
-          case 5:
+          case "5":
             System.Console.WriteLine($"The current phone number is {query.PhoneNumber}. Please edit the phone number.");
             query.AddPhoneNumber();
             returnToMainMenu = UpdateCheck();
             break;
-          case 6:
+          case "6":
             JobRoleService.RetrieveAllJobRoles();
             System.Console.WriteLine($"The current job role is {query.JobRoleName}. Please edit the job role.");
             var numOfJobRoles = JobRoleService.JobRoles.Count;
